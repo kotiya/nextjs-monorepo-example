@@ -3,10 +3,11 @@
  * @see https://github.com/belgattitude/nextjs-monorepo-example/tree/main/packages/eslint-config-bases
  */
 
-const { getPrettierConfig } = require('../helpers');
-const { ...prettierConfig } = getPrettierConfig();
+import { getPrettierConfig } from '../helpers';
 
-module.exports = {
+const { prettierConfig } = getPrettierConfig();
+
+export default {
   extends: ['prettier'],
   plugins: ['prettier'],
   rules: {

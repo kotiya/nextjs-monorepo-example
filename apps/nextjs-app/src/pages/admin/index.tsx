@@ -1,8 +1,4 @@
-import { HttpBadRequest } from '@httpx/exception';
-import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import type { ReactElement } from 'react';
-import { getServerTranslations } from '@/backend/i18n/getServerTranslations';
-import { adminConfig } from '@/features/admin/admin.config';
 import { AdminLayout } from '@/features/admin/layouts';
 import { AdminMainPage } from '@/features/admin/pages';
 
@@ -14,22 +10,30 @@ AdminRoute.getLayout = function getLayout(page: ReactElement) {
   return <AdminLayout>{page}</AdminLayout>;
 };
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const { locale } = context;
-  if (locale === undefined) {
-    throw new HttpBadRequest('locale is missing');
-  }
-  const { i18nNamespaces } = adminConfig;
-  return {
-    props: {
-      ...(await getServerTranslations(locale, i18nNamespaces)),
-    },
-    // revalidate: 60,
-  };
-};
-
-export default function AdminRoute(
-  _props: InferGetStaticPropsType<typeof getStaticProps>
-) {
+export default function AdminRoute() {
   return <AdminMainPage />;
+}
+
+export async function fetchStaticData() {
+  const response = await fetch('/api/static-data', { cache: 'force-cache' });
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchDynamicData() {
+  const response = await fetch('/api/dynamic-data', { cache: 'no-store' });
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchCachedData() {
+  const response = await fetch('/api/cached-data', { cache: 'default' });
+  const data = await response.json();
+  return data;
+}
+
+export async function fetchRevalidatedData() {
+  const response = await fetch('/api/revalidated-data', { cache: 'no-store' });
+  const data = await response.json();
+  return data;
 }

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 import { useTranslation } from 'next-i18next';
 import type { FC } from 'react';
 
@@ -41,7 +41,10 @@ export const HeroBlock: FC<Props> = () => {
             src={'/assets/annie-spratt-unsplash.jpg'}
             alt={'tailwind-ui-logo'}
             className="rounded object-cover object-center"
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </div>
       </div>
     </section>

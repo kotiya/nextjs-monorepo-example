@@ -1,7 +1,13 @@
-import type { Config } from 'tailwindcss';
+// Importing CommonJS modules
+const tailwindConfig = require('tailwindcss/defaultTheme');
+const tailwindV3Colors = require('./src/themes/shared/colors');
+const tailwindTheme = require('./src/themes/tailwind/tailwind.theme');
+
+// Migrating to ES Module syntax
+import { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import { tailwindV3Colors } from './src/themes/shared/colors';
-import { tailwindTheme } from './src/themes/tailwind/tailwind.theme'; // sharedTheme = require('./src/themes/tailwind/tailwind.theme');
+import { tailwindTheme } from './src/themes/tailwind/tailwind.theme';
 
 const tailwindConfig: Config = {
   content: [

@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import type { FC } from 'react';
 
 type Props = {
@@ -14,9 +14,7 @@ export const ErrorPage: FC<Props> = (props) => {
 
   return (
     <>
-      <Head>
-        <title>Error {statusCode}</title>
-      </Head>
+      <NextSeo title={`Error ${statusCode}`} />
       <div className="container bg-white text-2xl md:text-xl">
         <div className="flex h-screen w-screen flex-col items-center justify-center">
           <h1 className="m-5 text-5xl text-black md:text-4xl">Woops !</h1>

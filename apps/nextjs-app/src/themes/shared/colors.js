@@ -1,4 +1,4 @@
-const tailwindColors = require('tailwindcss/colors');
+import { colors as tailwindColors } from 'tailwindcss/colors';
 
 /**
  * Return tailwind v3 non-deprecated colors
@@ -25,4 +25,4 @@ const tailwindV3Colors = Object.entries(
     return acc;
   }, {});
 
-module.exports = { tailwindV3Colors };
+export { tailwindV3Colors };

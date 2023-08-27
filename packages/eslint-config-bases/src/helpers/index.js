@@ -1,7 +1,7 @@
-const { getDefaultIgnorePatterns } = require('./getDefaultIgnorePatterns');
-const { getPrettierConfig } = require('./getPrettierConfig');
+import { getDefaultIgnorePatterns } from './getDefaultIgnorePatterns';
+import { getPrettierConfig } from './getPrettierConfig';
 
-module.exports = {
+export {
   getDefaultIgnorePatterns,
   getPrettierConfig,
 };

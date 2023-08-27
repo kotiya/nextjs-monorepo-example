@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { Metadata } from 'next/head';
 import { useTranslation } from 'next-i18next';
 import type { FC } from 'react';
 
@@ -14,9 +14,9 @@ export const NotFoundPage: FC<Props> = (props) => {
   const title = props.title ?? t('system:notFound.title');
   return (
     <>
-      <Head>
+      <Metadata>
         <title>{title}</title>
-      </Head>
+      </Metadata>
       <div className="flex h-screen w-screen flex-col items-center justify-center bg-white">
         <h1
           data-testid="not-found-title"

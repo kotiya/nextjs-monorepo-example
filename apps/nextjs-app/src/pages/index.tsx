@@ -1,6 +1,4 @@
-import { HttpBadRequest } from '@httpx/exception';
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { getServerTranslations } from '@/backend/i18n/getServerTranslations';
 import { demoConfig } from '@/features/demo/demo.config';
 import { DemoPage } from '@/features/demo/pages';
 
@@ -14,15 +12,29 @@ export default function DemoRoute(
   return <DemoPage />;
 }
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const { locale } = context;
-  if (locale === undefined) {
-    throw new HttpBadRequest('locale is missing');
-  }
-  const { i18nNamespaces } = demoConfig;
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const res = await fetch('https://api.example.com/static-data', {
+    cache: 'force-cache',
+  });
+  const data = await res.json();
+
   return {
     props: {
-      ...(await getServerTranslations(locale, i18nNamespaces)),
+      data,
     },
+    revalidate: 10,
   };
 };
+
+export async function getServerSideProps() {
+  const res = await fetch('https://api.example.com/dynamic-data', {
+    cache: 'no-store',
+  });
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+}

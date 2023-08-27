@@ -1,7 +1,7 @@
 // @ts-check
 
-const path = require('path');
-const escape = require('shell-quote').quote;
+import path from 'path';
+import { quote } from 'shell-quote';
 
 const isWin = process.platform === 'win32';
 
@@ -43,7 +43,7 @@ const getEslintFixCmd = ({
 }) => {
   const cliRules = [...(rules ?? []), ...eslintGlobalRulesForFix]
     .filter((rule) => rule.trim().length > 0)
-    .map((r) => `"${r.trim()}"`);
+    .map((r) => `\"${r.trim()}\"`);
 
   // For lint-staged it's safer to not apply the fix command if it changes the AST
   // @see https://eslint.org/docs/user-guide/command-line-interface#--fix-type
@@ -59,7 +59,7 @@ const getEslintFixCmd = ({
     cliRules.length > 0 ? `--rule ${cliRules.join('--rule ')}` : '',
     files
       // makes output cleaner by removing absolute paths from filenames
-      .map((f) => `"./${path.relative(cwd, f)}"`)
+      .map((f) => `\"./${path.relative(cwd, f)}\"`)
       .join(' '),
   ].join(' ');
   return `eslint ${args}`;
@@ -78,12 +78,12 @@ const getEslintFixCmd = ({
  */
 const concatFilesForPrettier = (filenames) =>
   filenames
-    .map((filename) => `"${isWin ? filename : escape([filename])}"`)
+    .map((filename) => `\"${isWin ? filename : quote([filename])}\"`)
     .join(' ');
 
 const concatFilesForStylelint = concatFilesForPrettier;
 
-module.exports = {
+export {
   concatFilesForPrettier,
   concatFilesForStylelint,
   getEslintFixCmd,
